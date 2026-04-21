@@ -1,46 +1,24 @@
-from collections import deque
-
-def water_jug(jug1, jug2, target):
+def water_jug(a, b, target):
     visited = set()
-    queue = deque()
-    queue.append((0, 0, []))  # (jug1, jug2, path)
+    queue = [(0,0)]
 
     while queue:
-        x, y, path = queue.popleft()
-
-        if (x, y) in visited:
+        x,y = queue.pop(0)
+        if (x,y) in visited:
             continue
-        visited.add((x, y))
 
-        path = path + [(x, y)]
+        print(x,y)
+        visited.add((x,y))
 
-        if x == target or y == target:
-            return path
-        queue.append((jug1, y, path))  
-        queue.append((x, jug2, path))  
-        queue.append((0, y, path))     
-        queue.append((x, 0, path))     
+        if x==target or y==target:
+            print("Target reached")
+            return
 
-        pour = min(x, jug2 - y)
-        queue.append((x - pour, y + pour, path))
+        queue.append((a,y))
+        queue.append((x,b))
+        queue.append((0,y))
+        queue.append((x,0))
+        queue.append((min(a,x+y), max(0,x+y-a)))
+        queue.append((max(0,x+y-b), min(b,x+y)))
 
-        pour = min(y, jug1 - x)
-        queue.append((x + pour, y - pour, path))
-
-    return None
-
-
-# ---- User Input ----
-jug1 = int(input("Enter capacity of Jug 1: "))
-jug2 = int(input("Enter capacity of Jug 2: "))
-target = int(input("Enter target quantity: "))
-
-result = water_jug(jug1, jug2, target)
-
-# ---- Output ----
-if result:
-    print("\nSteps to reach target:")
-    for step in result:
-        print(step)
-else:
-    print("No solution possible")
+water_jug(4,3,2)
