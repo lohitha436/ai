@@ -1,38 +1,23 @@
 import itertools
 
-def tsp(distance):
-    n = len(distance)
-    cities = list(range(n))
-    
-    min_path = None
-    min_cost = float('inf')
-    
-    # Fix starting city as 0
-    for perm in itertools.permutations(cities[1:]):
-        path = (0,) + perm + (0,)
-        
-        cost = 0
-        for i in range(len(path) - 1):
-            cost += distance[path[i]][path[i+1]]
-        
-        if cost < min_cost:
-            min_cost = cost
-            min_path = path
-            
-    return min_path, min_cost
+graph = [
+    [0,10,15,20],
+    [10,0,35,25],
+    [15,35,0,30],
+    [20,25,30,0]
+]
 
+n = len(graph)
+cities = list(range(n))
 
-# ---- User Input ----
-n = int(input("Enter number of cities: "))
-print("Enter distance matrix:")
+min_path = float('inf')
 
-distance = []
-for i in range(n):
-    row = list(map(int, input().split()))
-    distance.append(row)
+for perm in itertools.permutations(cities):
+    cost = 0
+    for i in range(n-1):
+        cost += graph[perm[i]][perm[i+1]]
+    cost += graph[perm[-1]][perm[0]]
 
-path, cost = tsp(distance)
+    min_path = min(min_path, cost)
 
-# ---- Output ----
-print("\nShortest Path:", path)
-print("Minimum Cost:", cost)
+print("Minimum cost:", min_path)
