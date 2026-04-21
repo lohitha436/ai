@@ -1,13 +1,13 @@
 from collections import deque
 
-start = "123456780"
-goal = "123456708"
+start = "123456708"
+goal = "123456780"
 
 moves = [(0,1),(1,2),(3,4),(4,5),(6,7),(7,8),
          (0,3),(3,6),(1,4),(4,7),(2,5),(5,8)]
 
 def solve(start):
-    queue = deque([(start, "")])
+    queue = deque([(start, start)])
     visited = set()
 
     while queue:
@@ -24,7 +24,8 @@ def solve(start):
                 new[i], new[j] = new[j], new[i]
                 new = "".join(new)
                 if new not in visited:
-                    queue.append((new, path+"->"+new))
+                    queue.append((new, path + " -> " + new))  
+
     return "No solution"
 
 print(solve(start))
