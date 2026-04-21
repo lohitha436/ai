@@ -1,44 +1,26 @@
-def is_safe(board, row, col, n):
-    # check column
-    for i in range(row):
-        if board[i] == col:
-            return False
+N = 8
 
-    # check diagonal
-    for i in range(row):
-        if abs(board[i] - col) == abs(i - row):
+def is_safe(board, row, col):
+    for i in range(col):
+        if board[i] == row or abs(board[i] - row) == abs(i - col):
             return False
-
     return True
 
-
-def solve_n_queens(board, row, n):
-    if row == n:
+def solve(col, board):
+    if col == N:
+        print("Solution:", board)
         return True
 
-    for col in range(n):
-        if is_safe(board, row, col, n):
-            board[row] = col
-            if solve_n_queens(board, row + 1, n):
+    for i in range(N):
+        if is_safe(board, i, col):
+            board[col] = i
+
+            if solve(col + 1, board):
                 return True
-            board[row] = -1
+
+            board[col] = -1   # backtracking
 
     return False
 
-
-# ---- User Input ----
-n = int(input("Enter number of queens: "))
-
-board = [-1] * n
-
-if solve_n_queens(board, 0, n):
-    print("\nSolution:\n")
-    for i in range(n):
-        for j in range(n):
-            if board[i] == j:
-                print("Q", end=" ")
-            else:
-                print(".", end=" ")
-        print()
-else:
-    print("No solution exists")
+board = [-1] * N
+solve(0, board)
