@@ -1,24 +1,27 @@
+from collections import deque
+
 def water_jug(a, b, target):
     visited = set()
-    queue = [(0,0)]
+    queue = deque([(0,0)])
 
     while queue:
-        x,y = queue.pop(0)
-        if (x,y) in visited:
+        x, y = queue.popleft()
+
+        if (x, y) in visited:
             continue
 
-        print(x,y)
-        visited.add((x,y))
+        print(x, y)
+        visited.add((x, y))
 
-        if x==target or y==target:
+        if x == target or y == target:
             print("Target reached")
             return
 
-        queue.append((a,y))
-        queue.append((x,b))
-        queue.append((0,y))
-        queue.append((x,0))
-        queue.append((min(a,x+y), max(0,x+y-a)))
-        queue.append((max(0,x+y-b), min(b,x+y)))
+        queue.append((a, y))   # fill A
+        queue.append((x, b))   # fill B
+        queue.append((0, y))   # empty A
+        queue.append((x, 0))   # empty B
+        queue.append((min(a, x+y), max(0, x+y-a)))  # pour A→B
+        queue.append((max(0, x+y-b), min(b, x+y)))  # pour B→A
 
-water_jug(4,3,2)
+    print("No solution")
