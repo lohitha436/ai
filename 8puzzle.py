@@ -24,7 +24,7 @@ def solve(start):
                 new[i], new[j] = new[j], new[i]
                 new = "".join(new)
                 if new not in visited:
-                    queue.append((new, path + " -> " + new))  
+                    queue.append((new, path + " -> " + new))
 
     return "No solution"
 
