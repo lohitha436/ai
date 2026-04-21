@@ -8,8 +8,5 @@ def tower_of_hanoi(n, source, auxiliary, destination):
     tower_of_hanoi(n-1, auxiliary, source, destination)
 
 
-# ---- User Input ----
-n = int(input("Enter number of disks: "))
-
 print("\nSteps to solve Tower of Hanoi:\n")
-tower_of_hanoi(n, 'A', 'B', 'C')
+tower_of_hanoi(3, 'A', 'B', 'C')
