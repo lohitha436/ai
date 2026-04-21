@@ -1,16 +1,22 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([2, 4, 5, 4, 5])
+# Data
+X = np.array([1, 2, 3, 4, 5])
+Y = np.array([2, 4, 5, 4, 5])
 
-n = len(x)
-m = (n*np.sum(x*y) - np.sum(x)*np.sum(y)) / (n*np.sum(x*x) - (np.sum(x))**2)
-b = (np.sum(y) - m*np.sum(x)) / n
+# Mean
+mx = np.mean(X)
+my = np.mean(Y)
 
-print("Slope:", m)
-print("Intercept:", b)
+# Slope and Intercept
+m = np.sum((X - mx)*(Y - my)) / np.sum((X - mx)**2)
+c = my - m * mx
 
+# Line
+y_pred = m * X + c
 
-x_new = 6
-y_pred = m*x_new + b
-print("Prediction:", y_pred)
+# Plot
+plt.scatter(X, Y)
+plt.plot(X, y_pred)
+plt.show()
